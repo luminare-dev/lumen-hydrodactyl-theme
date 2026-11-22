@@ -1,0 +1,41 @@
+# Weekly: does the overlay still apply to Hydrodactyl's main branch and latest release?
+# A failure here means the next Hydrodactyl update needs new patches before Lumen supports it.
+name: upstream
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: check (${{ matrix.ref }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        ref: [pinned, main, latest-release]
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Apply the overlay (check only)
+        env:
+          REF: ${{ matrix.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          case "$REF" in
+            pinned) scripts/check-overlay.sh ;;
+            main) scripts/check-overlay.sh --ref main ;;
+            latest-release)
+              tag="$(gh api repos/BlueprintFramework/hydrodactyl/releases/latest --jq .tag_name)"
+              echo "latest release: $tag"
+              scripts/check-overlay.sh --ref "refs/tags/$tag" ;;
+          esac

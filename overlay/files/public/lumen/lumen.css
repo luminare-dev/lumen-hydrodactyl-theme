@@ -105,6 +105,50 @@
         background-color 0.2s var(--lumen-ease);
 }
 
+/*
+ * The minimized rail (client and admin share the Sidebar component): the panel draws 64px items
+ * inside 2rem padding and truncates the labels ("Overvi…"). Lumen keeps the rail width but uses
+ * 0.875rem padding, so items are 100px wide, sets the label at 12px without the scale transform
+ * (which kept the 14px layout width) and lets long labels wrap onto a second line.
+ */
+:root[data-lumen] body[data-sidebar-minimized="true"] {
+    --sidebar-minimized-width: 128px;
+    --sidebar-padding: 0.875rem;
+}
+
+:root[data-lumen] body[data-sidebar-minimized="true"] .sidebar-container:not([data-sidebar-minimized="false"]) {
+    padding-left: var(--sidebar-padding);
+    padding-right: var(--sidebar-padding);
+}
+
+:root[data-lumen] body[data-sidebar-minimized="true"] .sidebar-container:not([data-sidebar-minimized="false"]) .sidebar-indicator {
+    left: var(--sidebar-padding);
+}
+
+:root[data-lumen] body[data-sidebar-minimized="true"] .sidebar-container:not([data-sidebar-minimized="false"]) .nav-item {
+    /* 64px box: the 60px indicator plus the 4px gap below it, as upstream. */
+    width: var(--indicator-width);
+    height: 4rem;
+    gap: 0.25rem;
+    padding: 0.25rem 0.25rem calc(var(--nav-item-spacing) + 0.25rem);
+}
+
+:root[data-lumen] body[data-sidebar-minimized="true"] .sidebar-container:not([data-sidebar-minimized="false"]) .nav-item .nav-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    font-size: 0.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    transform: none;
+}
+
 :root[data-lumen][data-lumen-sidebar="floating"] .sidebar-container {
     --sidebar-initial-top: 0.75rem;
     margin-right: 0.5rem;

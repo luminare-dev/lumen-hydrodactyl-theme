@@ -20,7 +20,7 @@ index 0a144ccb..62acc0f4 100644
                          <Logo className='h-full w-full flex inset-0' />
                          <div className='border-l border-gray-200 h-full' />
 -                        Games
-+                        {lumenProductName('Games')}
++                        {lumenProductName()}
                      </div>
  
                      {/* Gradients */}

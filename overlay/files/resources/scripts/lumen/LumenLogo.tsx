@@ -17,8 +17,10 @@ export function hasLumenLogo(): boolean {
     return Boolean(logoDark || logoLight);
 }
 
-export function lumenProductName(fallback: string): string {
-    return branding().productName || fallback;
+// The configured product name, else the panel's own name (Settings -> General), else the fallback.
+export function lumenProductName(fallback = 'Panel'): string {
+    const site = (window as { SiteConfiguration?: { name?: string } }).SiteConfiguration;
+    return branding().productName || site?.name || fallback;
 }
 
 export default function LumenLogo({ className }: { className?: string }) {

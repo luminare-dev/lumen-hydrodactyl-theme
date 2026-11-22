@@ -63,7 +63,7 @@ every preset and every test case to the same bytes. The presets live in
 | `layout.indicator` | string | `pill`, `bar`, `glow` | Style of the active navigation item. |
 | `layout.contentWidth` | string | `full`, `wide`, `narrow` | Maximum page width: none, 1440 px, 1200 px. |
 | `layout.backgroundGlow` | boolean | | Soft accent light behind the page. |
-| `branding.productName` | string | ≤ 60 chars | Name on the login page. Empty keeps the panel's text. |
+| `branding.productName` | string | ≤ 60 chars | Name on the login page. Empty uses the panel name (Settings → General). |
 | `branding.logoDark`, `.logoLight` | URL | | Logo per mode; one alone is used for both. Both empty: the panel's own logo. |
 | `branding.favicon` | URL | | Favicon. Empty: the panel's own. |
 | `branding.loginBackground` | URL | | Image for the login page. Empty: the Lumen gradient. |

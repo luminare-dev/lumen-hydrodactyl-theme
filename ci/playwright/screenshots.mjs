@@ -34,7 +34,7 @@ for (const mode of ['dark', 'light']) {
         const file = join(out, `${name}-${mode}.png`);
         await page.screenshot({ path: file });
         const state = await page.evaluate(() => {
-            const art = document.querySelector('[data-lumen-login-art]');
+            const art = document.querySelector('.lumen-login-art');
             return {
                 theme: document.documentElement.dataset.theme,
                 lumen: document.documentElement.dataset.lumen ?? null,

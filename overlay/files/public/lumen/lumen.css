@@ -320,21 +320,21 @@
    Login and other auth pages
    ------------------------------------------------------------------------------------------ */
 
-:root[data-lumen] [data-lumen-login-art] {
+:root[data-lumen] .lumen-login-art {
     overflow: hidden;
     border-radius: var(--radius-3xl);
     margin: 0.75rem;
     background-color: var(--lumen-surface-sunken);
 }
 
-:root[data-lumen][data-lumen-login="gradient"] [data-lumen-login-art] {
+:root[data-lumen][data-lumen-login="gradient"] .lumen-login-art {
     background-image:
         radial-gradient(48rem 34rem at 85% 10%, color-mix(in srgb, var(--lumen-accent) 55%, transparent), transparent 66%),
         radial-gradient(42rem 36rem at 10% 95%, color-mix(in srgb, var(--lumen-accent-secondary) 50%, transparent), transparent 64%),
         linear-gradient(160deg, var(--lumen-surface-sunken), var(--lumen-canvas));
 }
 
-:root[data-lumen][data-lumen-login="gradient"] [data-lumen-login-art]::after {
+:root[data-lumen][data-lumen-login="gradient"] .lumen-login-art::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -346,23 +346,23 @@
     pointer-events: none;
 }
 
-:root[data-lumen][data-lumen-login="image"] [data-lumen-login-art] {
+:root[data-lumen][data-lumen-login="image"] .lumen-login-art {
     background-image: var(--lumen-login-background);
     background-size: cover;
     background-position: center;
 }
 
-:root[data-lumen] [data-lumen-login-art] > .opacity-50 {
+:root[data-lumen] .lumen-login-art > .opacity-50 {
     display: none;
 }
 
-:root[data-lumen] [data-lumen-login-art] > :first-child {
+:root[data-lumen] .lumen-login-art > :first-child {
     z-index: 1;
     font-family: var(--lumen-font-display);
     font-weight: var(--lumen-heading-weight);
 }
 
-:root[data-lumen] [data-lumen-login-art] [class~="border-gray-200"] {
+:root[data-lumen] .lumen-login-art [class~="border-gray-200"] {
     border-color: color-mix(in srgb, var(--lumen-text) 25%, transparent);
 }
 

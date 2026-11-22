@@ -15,7 +15,7 @@ use Pterodactyl\Tests\Integration\IntegrationTestCase;
  */
 class LumenAppearanceTest extends IntegrationTestCase
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         DB::table('lumen_appearance')->delete();

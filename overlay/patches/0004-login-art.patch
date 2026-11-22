@@ -1,0 +1,26 @@
+diff --git a/resources/scripts/routers/AuthenticationRouter.tsx b/resources/scripts/routers/AuthenticationRouter.tsx
+index 0a144ccb..4af13237 100644
+--- a/resources/scripts/routers/AuthenticationRouter.tsx
++++ b/resources/scripts/routers/AuthenticationRouter.tsx
+@@ -7,6 +7,7 @@ import ResetPasswordContainer from '@/components/auth/ResetPasswordContainer';
+ import Logo from '@/components/elements/HydroLogo';
+ import LocaleDropdown from '@/components/elements/LocaleDropdown';
+ import { NotFound } from '@/components/elements/ScreenBlock';
++import { lumenProductName } from '@/lumen/LumenLogo';
+ 
+ const AuthenticationRouter = () => {
+     return (
+@@ -35,11 +36,11 @@ const AuthenticationRouter = () => {
+                         <Route path='*' element={<NotFound />} />
+                     </Routes>
+                 </div>
+-                <div className='hidden lg:block w-full relative'>
++                <div className='hidden lg:block w-full relative' data-lumen-login-art=''>
+                     <div className='flex items-center gap-4 h-6 absolute right-(--page-padding) top-(--page-padding) text-lg'>
+                         <Logo className='h-full w-full flex inset-0' />
+                         <div className='border-l border-gray-200 h-full' />
+-                        Games
++                        {lumenProductName('Games')}
+                     </div>
+ 
+                     {/* Gradients */}

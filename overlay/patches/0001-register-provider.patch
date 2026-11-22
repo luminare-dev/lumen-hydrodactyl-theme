@@ -1,0 +1,12 @@
+diff --git a/config/app.php b/config/app.php
+index d4b7cec3..73ece3b9 100644
+--- a/config/app.php
++++ b/config/app.php
+@@ -211,6 +211,7 @@ return [
+     Pterodactyl\Providers\HashidsServiceProvider::class,
+     Pterodactyl\Providers\ObserverServiceProvider::class,
+     Pterodactyl\Providers\RouteServiceProvider::class,
++    Pterodactyl\Lumen\LumenServiceProvider::class,
+     Pterodactyl\Providers\RepositoryServiceProvider::class,
+     Pterodactyl\Providers\ServerOperationServiceProvider::class,
+     Pterodactyl\Providers\SubdomainServiceProvider::class,

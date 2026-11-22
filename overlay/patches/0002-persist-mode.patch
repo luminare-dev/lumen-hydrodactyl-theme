@@ -1,0 +1,15 @@
+diff --git a/resources/scripts/lib/appearance.ts b/resources/scripts/lib/appearance.ts
+index 89494620..eaccfad4 100644
+--- a/resources/scripts/lib/appearance.ts
++++ b/resources/scripts/lib/appearance.ts
+@@ -58,6 +58,10 @@ export function readAppearance(storage?: Pick<Storage, 'getItem'>): Appearance {
+ }
+ 
+ export function saveAppearance(preferences: Appearance, storage?: Pick<Storage, 'setItem'>): boolean {
++    // Lumen theme: remember the mode per user on the server too (public/lumen/boot.js).
++    (globalThis as { Lumen?: { persistMode?: (mode: AppearanceMode) => void } }).Lumen?.persistMode?.(
++        preferences.mode,
++    );
+     try {
+         (storage ?? window.localStorage).setItem(appearanceStorageKey, JSON.stringify(preferences));
+         return true;

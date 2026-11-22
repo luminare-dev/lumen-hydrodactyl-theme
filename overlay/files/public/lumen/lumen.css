@@ -1,0 +1,552 @@
+/*
+ * Lumen theme for the Hydrodactyl panel: the design layer.
+ *
+ * The colours, fonts, radii, spacing and shadows come from the token stylesheet
+ * (<style id="lumen-tokens">, generated from the saved token set); this file only uses the
+ * --lumen-* variables and the panel's own variables, so it works for every preset in both modes.
+ * Every rule is scoped to :root[data-lumen], which the head middleware sets, and needs no rebuild.
+ */
+
+@font-face {
+    font-family: "Sora";
+    src: url("/lumen/fonts/Sora-Variable.woff") format("woff");
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root[data-lumen] {
+    --lumen-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --lumen-gradient: linear-gradient(135deg, var(--lumen-accent) 0%, var(--lumen-accent-secondary) 100%);
+    --lumen-ring: 0 0 0 3px color-mix(in srgb, var(--lumen-focus) 38%, transparent);
+    --lumen-hairline: color-mix(in srgb, var(--lumen-border) 70%, transparent);
+    --lumen-glass: color-mix(in srgb, var(--lumen-surface) 78%, transparent);
+}
+
+/* ------------------------------------------------------------------------------------------
+   Base: fonts, background, selection, focus, scrollbars
+   ------------------------------------------------------------------------------------------ */
+
+:root[data-lumen],
+:root[data-lumen] body,
+:root[data-lumen] [data-hydrodactyl-app] {
+    font-family: var(--lumen-font-body);
+    color: var(--lumen-text);
+    background-color: var(--lumen-canvas);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+:root[data-lumen] :is(h1, h2, h3, h4) {
+    font-family: var(--lumen-font-display);
+    font-weight: var(--lumen-heading-weight);
+    letter-spacing: -0.015em;
+}
+
+:root[data-lumen] :is(code, pre, kbd, samp, .xterm) {
+    font-family: var(--lumen-font-mono);
+}
+
+:root[data-lumen][data-lumen-glow="on"] [data-hydrodactyl-app] {
+    background-image:
+        radial-gradient(70rem 42rem at -10% -20%, var(--lumen-glow), transparent 62%),
+        radial-gradient(56rem 36rem at 110% -10%, var(--lumen-glow-secondary), transparent 60%),
+        radial-gradient(40rem 30rem at 50% 120%, color-mix(in srgb, var(--lumen-accent) 6%, transparent), transparent 70%);
+    background-attachment: fixed;
+}
+
+:root[data-lumen] ::selection {
+    background: color-mix(in srgb, var(--lumen-accent) 32%, transparent);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] :focus-visible {
+    outline: 2px solid var(--lumen-focus);
+    outline-offset: 2px;
+}
+
+:root[data-lumen] * {
+    scrollbar-color: color-mix(in srgb, var(--lumen-text-muted) 35%, transparent) transparent;
+}
+
+:root[data-lumen] ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--lumen-text-muted) 35%, transparent);
+}
+
+:root[data-lumen] a:not([class]) {
+    color: var(--lumen-accent-text);
+}
+
+/* ------------------------------------------------------------------------------------------
+   Shell: the main content card, the sidebar and the header
+   ------------------------------------------------------------------------------------------ */
+
+/* The content area of every page is a PageContentBlock (bg-bg-raised + border). */
+:root[data-lumen] [class~="bg-bg-raised"][class~="border-mocha-400"][class~="rounded-2xl"] {
+    border-color: var(--lumen-border-color);
+    border-radius: var(--radius-3xl);
+    background-color: var(--lumen-glass);
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(18px) saturate(1.15);
+}
+
+:root[data-lumen][data-lumen-width="wide"] [class~="max-w-[120rem]"] {
+    max-width: 1440px;
+}
+
+:root[data-lumen][data-lumen-width="narrow"] [class~="max-w-[120rem]"] {
+    max-width: 1200px;
+}
+
+:root[data-lumen] .sidebar-container {
+    transition:
+        width var(--sidebar-transition-sidebar),
+        background-color 0.2s var(--lumen-ease);
+}
+
+:root[data-lumen][data-lumen-sidebar="floating"] .sidebar-container {
+    margin-right: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border: 1px solid var(--lumen-border-color);
+    border-radius: var(--radius-3xl);
+    background: linear-gradient(180deg, var(--lumen-glass), color-mix(in srgb, var(--lumen-surface-sunken) 70%, transparent));
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(18px);
+}
+
+:root[data-lumen] .sidebar-indicator {
+    border-color: color-mix(in srgb, var(--lumen-accent) 30%, transparent);
+    background-color: color-mix(in srgb, var(--lumen-accent) 12%, transparent);
+    border-radius: var(--radius-xl);
+    transition:
+        top var(--sidebar-transition-indicator),
+        opacity 0.2s var(--lumen-ease),
+        background-color 0.2s var(--lumen-ease);
+}
+
+:root[data-lumen][data-lumen-indicator="bar"] .sidebar-indicator {
+    border-color: transparent;
+    background-color: color-mix(in srgb, var(--lumen-surface-raised) 85%, transparent);
+    box-shadow: inset 3px 0 0 var(--lumen-accent);
+    border-radius: var(--radius-md);
+}
+
+:root[data-lumen][data-lumen-indicator="glow"] .sidebar-indicator {
+    border-color: color-mix(in srgb, var(--lumen-accent) 45%, transparent);
+    background-image: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--lumen-accent) 22%, transparent),
+        color-mix(in srgb, var(--lumen-accent-secondary) 10%, transparent)
+    );
+    box-shadow: 0 0 24px -4px color-mix(in srgb, var(--lumen-accent) 45%, transparent);
+}
+
+:root[data-lumen] .nav-item {
+    transition:
+        opacity 0.2s var(--lumen-ease),
+        color 0.2s var(--lumen-ease);
+}
+
+:root[data-lumen] :is(.sidebar-nav-main, ul) > li[data-active="true"] .nav-item {
+    opacity: 1;
+    color: var(--lumen-accent-text);
+}
+
+:root[data-lumen] :is(.sidebar-nav-main, ul) > li:not([data-active="true"]):hover .nav-item {
+    opacity: 0.85;
+}
+
+:root[data-lumen] .sidebar-logo-name {
+    font-family: var(--lumen-font-display);
+    font-weight: var(--lumen-heading-weight);
+    letter-spacing: -0.01em;
+}
+
+/* Logo slots (patched HydroLogo). */
+:root[data-lumen] .lumen-logo {
+    display: contents;
+}
+
+:root[data-lumen][data-theme="dark"] .lumen-logo-light,
+:root[data-lumen][data-theme="light"] .lumen-logo-dark {
+    display: none;
+}
+
+/* Header and dropdowns */
+:root[data-lumen] [role="menu"],
+:root[data-lumen] [data-radix-popper-content-wrapper] > * {
+    border-color: var(--lumen-border-color);
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(16px);
+}
+
+:root[data-lumen][data-lumen-toggle="off"] :is(button[data-icon="sun"], button[data-icon="moon"]),
+:root[data-lumen][data-lumen-toggle="off"] fieldset[aria-describedby="appearance-mode-description"] {
+    display: none;
+}
+
+/* The panel's own palette and accent pickers do nothing while Lumen sets the colours. */
+:root[data-lumen] fieldset[aria-describedby="appearance-palette-description"],
+:root[data-lumen] fieldset[aria-describedby="appearance-accent-description"] {
+    display: none;
+}
+
+/* ------------------------------------------------------------------------------------------
+   Surfaces: cards, boxes, tables
+   ------------------------------------------------------------------------------------------ */
+
+:root[data-lumen] :is(
+    [class~="bg-mocha-500"][class~="border-mocha-400"],
+    [class~="bg-mocha-500"][class~="border-[1px]"],
+    [class~="bg-mocha-400"][class~="border-mocha-300"][class~="rounded-xl"]
+) {
+    border-color: var(--lumen-border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+:root[data-lumen] :is([class~="bg-mocha-500"], [class~="bg-mocha-400"])[class~="rounded-xl"]:is(a, [role="button"]):hover {
+    border-color: color-mix(in srgb, var(--lumen-accent) 40%, var(--lumen-border));
+    box-shadow:
+        var(--shadow-md),
+        0 0 0 1px color-mix(in srgb, var(--lumen-accent) 18%, transparent);
+}
+
+:root[data-lumen] table thead th {
+    color: var(--lumen-text-muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+:root[data-lumen] table tbody tr {
+    transition: background-color 0.15s var(--lumen-ease);
+}
+
+:root[data-lumen] table tbody tr:hover {
+    background-color: color-mix(in srgb, var(--lumen-accent) 5%, transparent);
+}
+
+/* ------------------------------------------------------------------------------------------
+   Controls: buttons, inputs, switches, badges
+   ------------------------------------------------------------------------------------------ */
+
+/* Primary buttons: the panel's default button (cream fill) and the login submit. */
+:root[data-lumen] :is(button, a)[class~="bg-cream-400"][class~="text-mocha-500"],
+:root[data-lumen] form button[type="submit"][class~="bg-mocha-100"] {
+    border-color: transparent;
+    background-color: var(--lumen-accent);
+    background-image: var(--lumen-gradient);
+    color: var(--lumen-accent-contrast);
+    font-weight: 600;
+    box-shadow:
+        0 1px 0 color-mix(in srgb, white 25%, transparent) inset,
+        0 8px 20px -8px color-mix(in srgb, var(--lumen-accent) 60%, transparent);
+    transition:
+        filter 0.15s var(--lumen-ease),
+        box-shadow 0.15s var(--lumen-ease),
+        transform 0.15s var(--lumen-ease);
+}
+
+:root[data-lumen] :is(button, a)[class~="bg-cream-400"][class~="text-mocha-500"]:not(:disabled):hover,
+:root[data-lumen] form button[type="submit"][class~="bg-mocha-100"]:not(:disabled):hover {
+    filter: brightness(1.07) saturate(1.05);
+    box-shadow:
+        0 1px 0 color-mix(in srgb, white 25%, transparent) inset,
+        0 12px 26px -10px color-mix(in srgb, var(--lumen-accent) 75%, transparent);
+}
+
+/* Secondary buttons */
+:root[data-lumen] button[class~="bg-mocha-400"][class~="border-mocha-300"] {
+    border-color: var(--lumen-border);
+    background-color: var(--lumen-surface-raised);
+}
+
+:root[data-lumen] button[class~="bg-mocha-400"][class~="border-mocha-300"]:not(:disabled):hover {
+    border-color: color-mix(in srgb, var(--lumen-accent) 45%, var(--lumen-border));
+}
+
+/* Danger buttons keep a readable label on the danger colour in both modes. */
+:root[data-lumen] button[class~="bg-red-500"][class~="text-white"] {
+    background-color: color-mix(in srgb, var(--lumen-danger) 82%, black);
+}
+
+/* Text inputs, selects and text areas */
+:root[data-lumen] :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"]), textarea, select) {
+    caret-color: var(--lumen-accent);
+    transition:
+        border-color 0.15s var(--lumen-ease),
+        box-shadow 0.15s var(--lumen-ease),
+        background-color 0.15s var(--lumen-ease);
+}
+
+:root[data-lumen] :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"]), textarea, select):focus {
+    border-color: var(--lumen-focus);
+    box-shadow: var(--lumen-ring);
+}
+
+:root[data-lumen] [class*="text_input"] {
+    border: 1px solid var(--lumen-hairline);
+    background-color: color-mix(in srgb, var(--lumen-surface-sunken) 65%, transparent);
+}
+
+:root[data-lumen] [class*="text_input"]::placeholder,
+:root[data-lumen] input::placeholder,
+:root[data-lumen] textarea::placeholder {
+    color: color-mix(in srgb, var(--lumen-text-muted) 75%, transparent);
+}
+
+:root[data-lumen] input[type="checkbox"]:checked,
+:root[data-lumen] [role="switch"][data-state="checked"],
+:root[data-lumen] button[role="checkbox"][data-state="checked"] {
+    background-color: var(--lumen-accent);
+    border-color: var(--lumen-accent);
+    accent-color: var(--lumen-accent);
+}
+
+:root[data-lumen] input[type="range"] {
+    accent-color: var(--lumen-accent);
+}
+
+/* Status colours on badges and pills (bg-*-500/10 + text-*-400). */
+:root[data-lumen] :is([class~="bg-green-500/10"], [class~="bg-red-500/10"], [class~="bg-blue-500/10"], [class~="bg-yellow-500/10"]) {
+    border-radius: var(--radius-full, 9999px);
+}
+
+/* ------------------------------------------------------------------------------------------
+   Login and other auth pages
+   ------------------------------------------------------------------------------------------ */
+
+:root[data-lumen] [data-lumen-login-art] {
+    overflow: hidden;
+    border-radius: var(--radius-3xl);
+    margin: 0.75rem;
+    background-color: var(--lumen-surface-sunken);
+}
+
+:root[data-lumen][data-lumen-login="gradient"] [data-lumen-login-art] {
+    background-image:
+        radial-gradient(44rem 30rem at 85% 10%, color-mix(in srgb, var(--lumen-accent) 38%, transparent), transparent 65%),
+        radial-gradient(38rem 32rem at 10% 90%, color-mix(in srgb, var(--lumen-accent-secondary) 34%, transparent), transparent 62%),
+        linear-gradient(160deg, var(--lumen-surface-sunken), var(--lumen-canvas));
+}
+
+:root[data-lumen][data-lumen-login="gradient"] [data-lumen-login-art]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(color-mix(in srgb, var(--lumen-text) 5%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--lumen-text) 5%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 70% 30%, black 10%, transparent 70%);
+    pointer-events: none;
+}
+
+:root[data-lumen][data-lumen-login="image"] [data-lumen-login-art] {
+    background-image: var(--lumen-login-background);
+    background-size: cover;
+    background-position: center;
+}
+
+:root[data-lumen] [data-lumen-login-art] > .opacity-50 {
+    display: none;
+}
+
+:root[data-lumen] [data-lumen-login-art] > :first-child {
+    z-index: 1;
+    font-family: var(--lumen-font-display);
+    font-weight: var(--lumen-heading-weight);
+}
+
+:root[data-lumen] [data-lumen-login-art] [class~="border-gray-200"] {
+    border-color: color-mix(in srgb, var(--lumen-text) 25%, transparent);
+}
+
+:root[data-lumen] form:has(input#password) {
+    border-color: var(--lumen-border-color);
+    background-color: var(--lumen-glass);
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(16px);
+}
+
+/* The auth page's noise overlay fights the light surfaces; keep it subtle. */
+:root[data-lumen] [style*="auth-noise"] {
+    opacity: 0.12;
+}
+
+/* ------------------------------------------------------------------------------------------
+   Server-rendered pages: the error pages and any remaining legacy (AdminLTE) admin page.
+   ------------------------------------------------------------------------------------------ */
+
+/* Error pages (resources/views/errors/layout.blade.php) */
+:root[data-lumen] body:has(> .card) {
+    background-color: var(--lumen-canvas);
+    background-image:
+        radial-gradient(50rem 30rem at 0% 0%, var(--lumen-glow), transparent 60%),
+        radial-gradient(40rem 30rem at 100% 100%, var(--lumen-glow-secondary), transparent 60%);
+    color: var(--lumen-text);
+    font-family: var(--lumen-font-body);
+}
+
+:root[data-lumen] body > .card {
+    border-color: var(--lumen-border-color);
+    border-radius: var(--radius-3xl);
+    background-color: var(--lumen-surface);
+    box-shadow: var(--shadow-xl);
+}
+
+:root[data-lumen] body > .card .code {
+    background: var(--lumen-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-family: var(--lumen-font-display);
+}
+
+:root[data-lumen] body > .card :is(p, .message) {
+    color: var(--lumen-text-muted);
+}
+
+:root[data-lumen] body > .card a {
+    border-color: transparent;
+    border-radius: var(--radius-lg);
+    background: var(--lumen-gradient);
+    color: var(--lumen-accent-contrast);
+}
+
+/* AdminLTE (legacy admin pages kept by some installs and add-ons) */
+:root[data-lumen] body:is(.skin-blue, .skin-black, .hold-transition) {
+    background-color: var(--lumen-canvas);
+    color: var(--lumen-text);
+    font-family: var(--lumen-font-body);
+}
+
+:root[data-lumen] :is(.main-header .navbar, .main-header .logo) {
+    border: 0;
+    background-color: var(--lumen-surface-sunken);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] :is(.main-sidebar, .left-side) {
+    background-color: var(--lumen-surface-sunken);
+}
+
+:root[data-lumen] .sidebar-menu > li > a {
+    border-left: 3px solid transparent;
+    color: var(--lumen-text-muted);
+}
+
+:root[data-lumen] .sidebar-menu > li:is(.active, :hover) > a {
+    border-left-color: var(--lumen-accent);
+    background-color: color-mix(in srgb, var(--lumen-accent) 12%, transparent);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] .sidebar-menu > li.header {
+    background: transparent;
+    color: var(--lumen-text-muted);
+    letter-spacing: 0.06em;
+}
+
+:root[data-lumen] .content-wrapper,
+:root[data-lumen] .main-footer {
+    border: 0;
+    background-color: var(--lumen-canvas);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] :is(.content-header > h1, .content-header > h1 > small) {
+    color: var(--lumen-text);
+    font-family: var(--lumen-font-display);
+}
+
+:root[data-lumen] .breadcrumb > li > a {
+    color: var(--lumen-accent-text);
+}
+
+:root[data-lumen] .box {
+    border: 1px solid var(--lumen-border-color);
+    border-radius: var(--radius-xl);
+    background-color: var(--lumen-surface);
+    color: var(--lumen-text);
+    box-shadow: var(--shadow-sm);
+}
+
+:root[data-lumen] .box-header,
+:root[data-lumen] .box-footer {
+    border-color: var(--lumen-border-color);
+    background-color: transparent;
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] .box.box-primary {
+    border-top: 3px solid var(--lumen-accent);
+}
+
+:root[data-lumen] :is(.btn-primary, .btn-success.btn-primary) {
+    border-color: transparent;
+    background: var(--lumen-gradient);
+    color: var(--lumen-accent-contrast);
+}
+
+:root[data-lumen] :is(.btn-default, .btn-secondary) {
+    border-color: var(--lumen-border);
+    background-color: var(--lumen-surface-raised);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] .btn-danger {
+    border-color: transparent;
+    background-color: color-mix(in srgb, var(--lumen-danger) 82%, black);
+    color: #fff;
+}
+
+:root[data-lumen] .btn {
+    border-radius: var(--radius-lg);
+}
+
+:root[data-lumen] :is(.form-control, .select2-selection, .input-group-addon) {
+    border-color: var(--lumen-border);
+    border-radius: var(--radius-md);
+    background-color: var(--lumen-surface-sunken);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] .form-control:focus {
+    border-color: var(--lumen-focus);
+    box-shadow: var(--lumen-ring);
+}
+
+:root[data-lumen] .table > :is(thead, tbody, tfoot) > tr > :is(th, td) {
+    border-color: var(--lumen-hairline);
+    color: var(--lumen-text);
+}
+
+:root[data-lumen] .table-hover > tbody > tr:hover {
+    background-color: color-mix(in srgb, var(--lumen-accent) 6%, transparent);
+}
+
+:root[data-lumen] .label-primary,
+:root[data-lumen] .bg-blue {
+    background-color: var(--lumen-accent);
+    color: var(--lumen-accent-contrast);
+}
+
+:root[data-lumen] .callout,
+:root[data-lumen] .alert {
+    border-radius: var(--radius-lg);
+}
+
+:root[data-lumen] .content a:not([class]) {
+    color: var(--lumen-accent-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root[data-lumen] * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

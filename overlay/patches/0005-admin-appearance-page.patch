@@ -1,0 +1,51 @@
+diff --git a/resources/scripts/components/admin/AdminApp.tsx b/resources/scripts/components/admin/AdminApp.tsx
+index 1b9741b7..7ea45c6c 100644
+--- a/resources/scripts/components/admin/AdminApp.tsx
++++ b/resources/scripts/components/admin/AdminApp.tsx
+@@ -8,6 +8,7 @@ import {
+     Key01Icon,
+     Location01Icon,
+     Package01Icon,
++    PaintBoardIcon,
+     ServerStack01Icon,
+     ServerStack02Icon,
+     Settings02Icon,
+@@ -97,6 +98,7 @@ const CustomNavigationSettings = lazy(() => import('./settings/CustomNavigationS
+ const DomainsContainer = lazy(() => import('./settings/domains/DomainsContainer'));
+ const DomainFormContainer = lazy(() => import('./settings/domains/DomainFormContainer'));
+ const BrandingSettings = lazy(() => import('./settings/BrandingSettings'));
++const LumenAppearancePage = lazy(() => import('@/lumen/admin/AppearancePage'));
+ 
+ interface ExtendedWindow extends Window {
+     SiteConfiguration?: SiteSettings;
+@@ -139,6 +141,7 @@ const AdminShell = () => {
+     const NavigationMounts = useRef<HTMLAnchorElement>(null);
+     const NavigationSettings = useRef<HTMLAnchorElement>(null);
+     const NavigationApi = useRef<HTMLAnchorElement>(null);
++    const NavigationAppearance = useRef<HTMLAnchorElement>(null);
+ 
+     const navItems: AdminNavItem[] = [
+         {
+@@ -157,6 +160,14 @@ const AdminShell = () => {
+             ref: NavigationSettings,
+             end: false,
+         },
++        {
++            to: '/appearance',
++            icon: PaintBoardIcon,
++            text: 'Appearance',
++            tabName: 'appearance',
++            ref: NavigationAppearance,
++            end: false,
++        },
+         {
+             to: '/servers',
+             icon: ServerStack02Icon,
+@@ -306,6 +317,7 @@ const AdminShell = () => {
+                                         <Route path='domains/:id' element={<DomainFormContainer />} />
+                                         <Route path='logo' element={<BrandingSettings />} />
+                                     </Route>
++                                    <Route path='/appearance' element={<LumenAppearancePage />} />
+                                     <Route path='*' element={<NotFound />} />
+                                 </Routes>
+                             </Suspense>

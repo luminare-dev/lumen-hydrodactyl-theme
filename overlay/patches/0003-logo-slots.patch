@@ -1,0 +1,17 @@
+diff --git a/resources/scripts/components/elements/HydroLogo.tsx b/resources/scripts/components/elements/HydroLogo.tsx
+index 3d3c1c62..4b00a994 100644
+--- a/resources/scripts/components/elements/HydroLogo.tsx
++++ b/resources/scripts/components/elements/HydroLogo.tsx
+@@ -1,8 +1,12 @@
+ import { useTranslation } from '@/i18n/I18nProvider';
++import LumenLogo, { hasLumenLogo } from '@/lumen/LumenLogo';
+ 
+ // million-ignore
+ const Logo = ({ className, uniqueId }: { className?: string; uniqueId?: string } = {}) => {
+     const { t } = useTranslation();
++    if (hasLumenLogo()) {
++        return <LumenLogo className={className} />;
++    }
+     const customLogo = (window as Record<string, unknown>).SiteConfiguration?.logo as string | undefined;
+ 
+     if (customLogo) {

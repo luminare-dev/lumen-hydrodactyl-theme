@@ -1,0 +1,43 @@
+lumen-hydrodactyl-theme
+Copyright 2026 Paul Pasaurek
+
+The source code in this repository is licensed under Apache-2.0 (see the
+LICENSE file). That licence covers the code only.
+
+The names "Luminare Development" and "Luminare", the Luminare logo and mark,
+the name and logo of this project, the README header images, the social
+preview image and all files in docs/brand/ and overlay/files/public/lumen/brand/
+(the logo and favicon files of the default preset), as well as the screenshots
+in docs/screenshots/, are not licensed under Apache-2.0 or under any other
+licence in this repository. In an installed panel those files are in
+public/lumen/brand/. No permission is granted to use them, except as required
+for reasonable and customary use in describing the origin of the work and
+reproducing the content of this NOTICE file. The Appearance page replaces them
+with your own logos.
+
+The images in docs/brand/ contain text set in the Sora typeface, converted to
+outlines. Sora is Copyright 2019 The Sora Project Authors and is licensed
+under the SIL Open Font License, Version 1.1 (https://openfontlicense.org).
+overlay/files/public/lumen/fonts/Sora-Variable.woff is that font, unchanged
+except for the WOFF container, distributed under the same licence
+(Sora-OFL.txt next to it); it keeps its own licence.
+
+Hydrodactyl
+The files in overlay/patches/ are changes to files of Hydrodactyl
+(https://github.com/BlueprintFramework/hydrodactyl), Copyright (c)
+2025-Present BlueprintFramework, parent collaborators, and contributors,
+licensed under the Apache License 2.0. Hydrodactyl is a fork of Pterodactyl
+Panel, Copyright (c) Dane Everitt and contributors, licensed under the MIT
+licence (copied to third_party/LICENSE_PTERO.md). The patched files keep those
+licences and notices; each patch is a modification in the sense of section 4
+of the Apache License 2.0 and is marked by the "Lumen theme" comments and by
+the file names in overlay/patches/. The overlay's own new files
+(overlay/files/) contain no Hydrodactyl code.
+
+The screenshots in docs/screenshots/ show Hydrodactyl running the Lumen theme
+with invented example data only. The parts of Hydrodactyl they show keep their
+own licences.
+
+Not affiliated with or endorsed by the Blueprint project or the Pterodactyl
+project. Hydrodactyl, Blueprint and Pterodactyl are named only to describe
+what this project works with.

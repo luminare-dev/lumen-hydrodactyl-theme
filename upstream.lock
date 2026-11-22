@@ -1,0 +1,4 @@
+# Hydrodactyl release the overlay is built and tested against (scripts/check-overlay.sh, CI).
+UPSTREAM_REPO=https://github.com/BlueprintFramework/hydrodactyl.git
+UPSTREAM_REF=v6.4.2
+UPSTREAM_COMMIT=fc93a1f36e3a181448707ca433bac69d57a9c22a

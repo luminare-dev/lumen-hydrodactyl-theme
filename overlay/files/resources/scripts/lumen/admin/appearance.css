@@ -1,0 +1,629 @@
+/* Admin → Appearance page. Uses only the --lumen-* token variables, so it follows the draft. */
+
+.lumen-ap {
+    --ap-gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-gap);
+    padding-bottom: 5rem;
+    color: var(--lumen-text);
+}
+
+.lumen-ap-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+@media (min-width: 1280px) {
+    .lumen-ap-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+    }
+
+    .lumen-ap-preview {
+        position: sticky;
+        top: 0;
+    }
+}
+
+.lumen-ap-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.lumen-ap-section {
+    border: 1px solid var(--lumen-border-color, var(--lumen-border));
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-surface);
+    box-shadow: var(--shadow-sm);
+    padding: 1.25rem;
+}
+
+.lumen-ap-section > header {
+    margin-bottom: 1rem;
+}
+
+.lumen-ap-section > header h2 {
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.lumen-ap-section > header p {
+    margin: 0.25rem 0 0;
+    color: var(--lumen-text-muted);
+    font-size: 0.85rem;
+}
+
+.lumen-ap-section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.lumen-ap-row,
+.lumen-ap-color-row {
+    display: grid;
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: center;
+}
+
+@media (max-width: 640px) {
+    .lumen-ap-row,
+    .lumen-ap-color-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.lumen-ap-row-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.lumen-ap-row-label small {
+    color: var(--lumen-text-muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.lumen-ap-row-control {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 0;
+}
+
+.lumen-ap-input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    background: var(--lumen-surface-sunken);
+    color: var(--lumen-text);
+    padding: 0.5rem 0.75rem;
+    font: inherit;
+    font-size: 0.875rem;
+}
+
+.lumen-ap-input:focus {
+    outline: none;
+    border-color: var(--lumen-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--lumen-focus) 35%, transparent);
+}
+
+.lumen-ap-code {
+    font-family: var(--lumen-font-mono);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.lumen-ap-segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.7);
+    background: var(--lumen-surface-sunken);
+}
+
+.lumen-ap-segmented button {
+    border: 0;
+    border-radius: calc(var(--lumen-radius) * 0.5);
+    background: transparent;
+    color: var(--lumen-text-muted);
+    padding: 0.35rem 0.8rem;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.lumen-ap-segmented button[data-active="true"] {
+    background: var(--lumen-surface-raised);
+    color: var(--lumen-text);
+    box-shadow:
+        var(--shadow-xs),
+        inset 0 0 0 1px color-mix(in srgb, var(--lumen-accent) 45%, transparent);
+}
+
+.lumen-ap-switch {
+    position: relative;
+    width: 2.6rem;
+    height: 1.5rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: 999px;
+    background: var(--lumen-surface-sunken);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.lumen-ap-switch span {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 999px;
+    background: var(--lumen-text-muted);
+    transition: transform 0.15s;
+}
+
+.lumen-ap-switch[data-on="true"] {
+    border-color: transparent;
+    background: var(--lumen-accent);
+}
+
+.lumen-ap-switch[data-on="true"] span {
+    transform: translateX(1.1rem);
+    background: var(--lumen-accent-contrast);
+}
+
+.lumen-ap-range {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    width: 100%;
+    max-width: 22rem;
+}
+
+.lumen-ap-range input {
+    flex: 1;
+    accent-color: var(--lumen-accent);
+}
+
+.lumen-ap-range output {
+    min-width: 3.5rem;
+    color: var(--lumen-text-muted);
+    font-family: var(--lumen-font-mono);
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.lumen-ap-color {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.lumen-ap-color input[type="color"] {
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 1px solid var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.5);
+    background: none;
+    cursor: pointer;
+}
+
+.lumen-ap-color input[type="text"] {
+    width: 6.5rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.5);
+    background: var(--lumen-surface-sunken);
+    color: var(--lumen-text);
+    padding: 0.4rem 0.6rem;
+    font-family: var(--lumen-font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.lumen-ap-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.lumen-ap-color-row[data-warn="true"] .lumen-ap-row-label {
+    color: var(--lumen-warning);
+}
+
+.lumen-ap-warning {
+    grid-column: 1 / -1;
+    justify-self: start;
+    border: 1px solid color-mix(in srgb, var(--lumen-warning) 40%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lumen-warning) 10%, transparent);
+    color: var(--lumen-warning);
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+}
+
+.lumen-ap-modebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lumen-ap-contrast-summary {
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: color-mix(in srgb, var(--lumen-warning) 12%, transparent);
+    color: var(--lumen-warning);
+}
+
+.lumen-ap-contrast-summary[data-ok="true"] {
+    background: color-mix(in srgb, var(--lumen-success) 12%, transparent);
+    color: var(--lumen-success);
+}
+
+.lumen-ap-presets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: 0.75rem;
+}
+
+.lumen-ap-preset {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-surface-sunken);
+    color: var(--lumen-text);
+    padding: 0.75rem;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s;
+}
+
+.lumen-ap-preset:hover,
+.lumen-ap-preset[data-active="true"] {
+    border-color: var(--lumen-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--lumen-accent) 20%, transparent);
+}
+
+.lumen-ap-preset small {
+    color: var(--lumen-text-muted);
+    font-size: 0.75rem;
+}
+
+.lumen-ap-swatches {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    height: 1.5rem;
+    overflow: hidden;
+    border-radius: calc(var(--lumen-radius) * 0.5);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lumen-text) 12%, transparent);
+}
+
+.lumen-ap-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.lumen-ap-asset {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.lumen-ap-asset-thumb {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    border: 1px dashed var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    background:
+        repeating-conic-gradient(color-mix(in srgb, var(--lumen-text) 6%, transparent) 0 25%, transparent 0 50%) 0 0 /
+        12px 12px,
+        var(--lumen-surface-sunken);
+}
+
+.lumen-ap-asset-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.lumen-ap-asset-thumb em {
+    color: var(--lumen-text-muted);
+    font-size: 0.7rem;
+    font-style: normal;
+}
+
+.lumen-ap-asset-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.lumen-ap-upload {
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    padding: 0 0.75rem;
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    background: var(--lumen-gradient, var(--lumen-accent));
+    color: var(--lumen-accent-contrast);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lumen-ap-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lumen-ap-preview-head {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.lumen-ap-preview-head .lumen-ap-row-label {
+    margin-left: auto;
+}
+
+.lumen-ap-contrast-list {
+    margin: 0;
+    padding: 0.75rem 1rem 0.75rem 1.75rem;
+    border: 1px solid color-mix(in srgb, var(--lumen-warning) 40%, transparent);
+    border-radius: var(--lumen-radius);
+    color: var(--lumen-warning);
+    font-size: 0.8rem;
+}
+
+.lumen-ap-savebar {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: var(--lumen-radius);
+    background: color-mix(in srgb, var(--lumen-surface) 88%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-lg);
+}
+
+.lumen-ap-savebar > span {
+    margin-right: auto;
+    color: var(--lumen-text-muted);
+    font-size: 0.85rem;
+}
+
+.lumen-ap-savebar[data-dirty="true"] > span {
+    color: var(--lumen-warning);
+    font-weight: 500;
+}
+
+.lumen-ap-error {
+    color: var(--lumen-danger);
+}
+
+/* The scoped sample (two copies, one per mode). */
+
+.lumen-sample {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--lumen-border);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-canvas);
+    color: var(--lumen-text);
+    font-family: var(--lumen-font-body);
+    padding: 0.75rem;
+}
+
+.lumen-sample[data-lumen-glow="on"] {
+    background-image:
+        radial-gradient(18rem 12rem at 0% 0%, var(--lumen-glow), transparent 65%),
+        radial-gradient(16rem 12rem at 100% 0%, var(--lumen-glow-secondary), transparent 65%);
+}
+
+.lumen-sample-mode {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    color: var(--lumen-text-muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.lumen-sample-frame {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+}
+
+.lumen-sample-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+}
+
+.lumen-sample[data-lumen-sidebar="floating"] .lumen-sample-nav {
+    border: 1px solid var(--lumen-border-color);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-surface);
+}
+
+.lumen-sample-brand {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    margin-bottom: 0.4rem;
+    font-family: var(--lumen-font-display);
+    font-weight: var(--lumen-heading-weight);
+}
+
+.lumen-sample-brand img {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+}
+
+.lumen-sample-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 999px;
+    background: var(--lumen-gradient, var(--lumen-accent));
+}
+
+.lumen-sample-nav > span {
+    padding: 0.35rem 0.5rem;
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    color: var(--lumen-text-muted);
+}
+
+.lumen-sample-nav > span[data-active="true"] {
+    color: var(--lumen-accent-text);
+    background: color-mix(in srgb, var(--lumen-accent) 12%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lumen-accent) 30%, transparent);
+}
+
+.lumen-sample[data-lumen-indicator="bar"] .lumen-sample-nav > span[data-active="true"] {
+    background: var(--lumen-surface-raised);
+    box-shadow: inset 3px 0 0 var(--lumen-accent);
+}
+
+.lumen-sample[data-lumen-indicator="glow"] .lumen-sample-nav > span[data-active="true"] {
+    box-shadow: 0 0 16px -4px color-mix(in srgb, var(--lumen-accent) 50%, transparent);
+}
+
+.lumen-sample-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.85rem;
+    border: 1px solid var(--lumen-border-color);
+    border-radius: var(--lumen-radius);
+    background: var(--lumen-surface);
+    box-shadow: var(--shadow-md);
+}
+
+.lumen-sample-card h3 {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.lumen-sample-card p {
+    margin: 0;
+    color: var(--lumen-text-muted);
+    font-size: 0.75rem;
+}
+
+.lumen-sample-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.lumen-sample-badges span {
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.lumen-sample-badges [data-tone="success"] {
+    color: var(--lumen-success);
+    background: color-mix(in srgb, var(--lumen-success) 14%, transparent);
+}
+
+.lumen-sample-badges [data-tone="warning"] {
+    color: var(--lumen-warning);
+    background: color-mix(in srgb, var(--lumen-warning) 14%, transparent);
+}
+
+.lumen-sample-badges [data-tone="danger"] {
+    color: var(--lumen-danger);
+    background: color-mix(in srgb, var(--lumen-danger) 14%, transparent);
+}
+
+.lumen-sample-badges [data-tone="info"] {
+    color: var(--lumen-info);
+    background: color-mix(in srgb, var(--lumen-info) 14%, transparent);
+}
+
+.lumen-sample-input {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--lumen-border);
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    background: var(--lumen-surface-sunken);
+    color: var(--lumen-text-muted);
+    font-family: var(--lumen-font-mono);
+    font-size: 0.72rem;
+}
+
+.lumen-sample-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.lumen-sample-primary,
+.lumen-sample-secondary {
+    padding: 0.35rem 0.8rem;
+    border-radius: calc(var(--lumen-radius) * 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.lumen-sample-primary {
+    background: linear-gradient(135deg, var(--lumen-accent), var(--lumen-accent-secondary));
+    color: var(--lumen-accent-contrast);
+}
+
+.lumen-sample-secondary {
+    border: 1px solid var(--lumen-border);
+    background: var(--lumen-surface-raised);
+    color: var(--lumen-text);
+}
+
+.lumen-sample-link {
+    color: var(--lumen-accent-text);
+    font-size: 0.75rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}

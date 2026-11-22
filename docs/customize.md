@@ -30,7 +30,8 @@ and applied as CSS variables on the next page load; there is no rebuild.
 
 The default preset shows the Luminare mark and favicon. To use your own: upload your logos and
 favicon in **Branding**, or apply the **Graphite** preset (no logos, the panel's own logo and
-favicon come back) and then adjust the colours. The Luminare files themselves are not licensed for
+favicon come back) and then adjust the colours. A logo set in Hydrodactyl's own Settings → Branding
+also replaces the shipped Luminare favicon; a favicon uploaded in Appearance wins over both. The Luminare files themselves are not licensed for
 other use (see NOTICE).
 
 ## Custom CSS tips

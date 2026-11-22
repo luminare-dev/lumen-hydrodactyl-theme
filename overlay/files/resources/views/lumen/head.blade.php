@@ -3,6 +3,12 @@
     $lumenVersion = @filemtime(public_path('lumen/lumen.css')) ?: 1;
     $lumenTokens = $lumen['tokens'];
     $lumenJson = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES;
+    // The shipped Luminare favicon steps back when the panel has its own logo (Settings -> Branding);
+    // an uploaded Lumen favicon always wins.
+    $lumenFavicon = $lumenTokens['branding']['favicon'];
+    if (str_starts_with($lumenFavicon, '/lumen/brand/') && config('app.logo.type') && config('app.logo.value')) {
+        $lumenFavicon = '';
+    }
 @endphp
 <meta name="lumen-theme" content="{{ $lumen['hash'] }}" data-lumen-head>
 @if(str_contains($lumenTokens['typography']['display'] . $lumenTokens['typography']['body'], 'Sora'))
@@ -12,8 +18,8 @@
 @if($lumenTokens['typography']['stylesheet'] !== '')
 <link rel="stylesheet" href="{{ $lumenTokens['typography']['stylesheet'] }}">
 @endif
-@if($lumenTokens['branding']['favicon'] !== '')
-<link rel="icon" href="{{ $lumenTokens['branding']['favicon'] }}">
+@if($lumenFavicon !== '')
+<link rel="icon" href="{{ $lumenFavicon }}">
 @endif
 <style id="lumen-tokens">{!! $lumen['css'] !!}</style>
 <script>window.LumenAppearance = {!! json_encode($client, $lumenJson) !!};</script>

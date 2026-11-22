@@ -23,7 +23,16 @@ admin panel that changes colours, fonts, spacing, layout and logos without a reb
 [![ci](https://github.com/luminare-dev/lumen-hydrodactyl-theme/actions/workflows/ci.yml/badge.svg)](https://github.com/luminare-dev/lumen-hydrodactyl-theme/actions/workflows/ci.yml)
 [![licence](https://img.shields.io/github/license/luminare-dev/lumen-hydrodactyl-theme)](LICENSE)
 
-<!-- screenshots -->
+| Dark | Light |
+|---|---|
+| ![Client dashboard, dark](docs/screenshots/client-dashboard-dark.png) | ![Client dashboard, light](docs/screenshots/client-dashboard-light.png) |
+| ![Admin, Appearance page, dark](docs/screenshots/admin-appearance-dark.png) | ![Admin, Appearance page, light](docs/screenshots/admin-appearance-light.png) |
+| ![Login, dark](docs/screenshots/login-dark.png) | ![Login, light](docs/screenshots/login-light.png) |
+| ![Admin, servers, dark](docs/screenshots/admin-servers-dark.png) | ![Admin, overview, light](docs/screenshots/admin-overview-light.png) |
+| ![Server console, dark](docs/screenshots/client-server-dark.png) | ![Admin, settings, light](docs/screenshots/admin-settings-light.png) |
+
+Screenshots from CI (the `screenshots` artifact of the `panel` workflow), with invented example data
+and no daemon attached, so servers show as offline.
 
 ## Why
 

@@ -1,5 +1,5 @@
 // CI only: screenshots of the patched panel in dark and light mode.
-//   node ci/screenshots.mjs <base-url> <out-dir> <server-short-id>
+//   node ci/playwright/screenshots.mjs <base-url> <out-dir> <server-short-id>
 // The theme's default mode is "system", so the browser's colour scheme picks the mode.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -33,11 +33,15 @@ for (const mode of ['dark', 'light']) {
         await page.waitForTimeout(1200);
         const file = join(out, `${name}-${mode}.png`);
         await page.screenshot({ path: file });
-        const state = await page.evaluate(() => ({
-            theme: document.documentElement.dataset.theme,
-            lumen: document.documentElement.dataset.lumen ?? null,
-            tokens: Boolean(document.getElementById('lumen-tokens')),
-        }));
+        const state = await page.evaluate(() => {
+            const art = document.querySelector('[data-lumen-login-art]');
+            return {
+                theme: document.documentElement.dataset.theme,
+                lumen: document.documentElement.dataset.lumen ?? null,
+                tokens: Boolean(document.getElementById('lumen-tokens')),
+                loginArt: art ? getComputedStyle(art).backgroundImage.slice(0, 120) : null,
+            };
+        });
         report.push({ name, mode, url: page.url(), ...state });
         console.log(`${file}  theme=${state.theme} lumen=${state.lumen} tokens=${state.tokens}`);
     };

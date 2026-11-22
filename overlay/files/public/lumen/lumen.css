@@ -106,9 +106,10 @@
 }
 
 :root[data-lumen][data-lumen-sidebar="floating"] .sidebar-container {
+    --sidebar-initial-top: 0.75rem;
     margin-right: 0.5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
     border: 1px solid var(--lumen-border-color);
     border-radius: var(--radius-3xl);
     background: linear-gradient(180deg, var(--lumen-glass), color-mix(in srgb, var(--lumen-surface-sunken) 70%, transparent));

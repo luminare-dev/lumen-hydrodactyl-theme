@@ -54,18 +54,9 @@ jobs:
             resources/scripts/routers/AuthenticationRouter.tsx \
             resources/scripts/components/admin/AdminApp.tsx
 
-      - name: TypeScript (fails on errors in Lumen or patched files)
+      - name: TypeScript (no new errors compared with upstream)
         working-directory: ${{ runner.temp }}/panel
-        run: |
-          set +e
-          pnpm exec tsc -p tsconfig.json --noEmit > "$RUNNER_TEMP/tsc.log" 2>&1
-          echo "tsc exit $? ($(grep -c 'error TS' "$RUNNER_TEMP/tsc.log") errors in the whole tree)"
-          set -e
-          ours='^resources/scripts/(lumen/|lib/appearance\.ts|components/elements/HydroLogo\.tsx'
-          ours="$ours|routers/AuthenticationRouter\.tsx|components/admin/AdminApp\.tsx)"
-          if grep -E "$ours" "$RUNNER_TEMP/tsc.log"; then
-            exit 1
-          fi
+        run: bash "$GITHUB_WORKSPACE/ci/tsc-diff.sh" "$GITHUB_WORKSPACE"
 
       - name: Hydrodactyl's appearance tests (cover the patched saveAppearance)
         working-directory: ${{ runner.temp }}/panel
@@ -197,11 +188,9 @@ jobs:
 
       - name: Screenshots (Playwright, Chromium)
         run: |
-          mkdir -p "$RUNNER_TEMP/pw" && cd "$RUNNER_TEMP/pw"
-          npm init -y >/dev/null
-          npm install --no-audit --no-fund playwright@1.49.1 >/dev/null
+          cd ci/playwright
+          npm ci --no-audit --no-fund
           npx playwright install --with-deps chromium >/dev/null
-          cp "$GITHUB_WORKSPACE/ci/screenshots.mjs" .
           node screenshots.mjs http://localhost:8080 "$GITHUB_WORKSPACE/screenshots" "$SERVER_ID"
 
       - name: Panel logs

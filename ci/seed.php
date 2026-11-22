@@ -28,7 +28,7 @@ $user = function (string $username, string $first, string $last, bool $admin) us
         'name_last' => $last,
         'password' => Hash::make($password),
         'root_admin' => $admin,
-        'language' => 'en',
+        'language' => config('app.locale', 'en-US'),
     ]);
     $u->save();
 

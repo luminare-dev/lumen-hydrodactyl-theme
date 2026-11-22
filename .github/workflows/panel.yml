@@ -190,6 +190,7 @@ jobs:
 
       - name: Seed example data
         run: |
+          set -o pipefail
           docker compose -f ci/docker-compose.yml --env-file ci/.env exec -T -e SEED_PASSWORD panel \
             php /app/ci-seed.php | tee "$RUNNER_TEMP/seed.log"
           echo "SERVER_ID=$(tail -n 1 "$RUNNER_TEMP/seed.log")" >> "$GITHUB_ENV"

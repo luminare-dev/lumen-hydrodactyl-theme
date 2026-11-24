@@ -34,9 +34,21 @@ class Parity(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_markup_never_reaches_the_stylesheet(self):
+        # The CSS goes into a <style> element, so no "<" may survive: that rules out </style,
+        # <!-- and <script in every spelling without parsing HTML.
+        for cmd in (["php", "tests/parity/run.php"], NODE + ["tests/parity/run.mts"]):
+            data = json.loads(run(cmd).stdout)
+            for name, case in data["cases"].items():
+                self.assertNotIn("<", case["css"], f"{cmd[0]}: {name}")
+            for name, preset in data["presets"].items():
+                self.assertNotIn("<", preset["css"] + preset["scoped"], f"{cmd[0]}: {name}")
+
+    def test_custom_css_is_escaped_not_stripped(self):
         data = json.loads(run(["php", "tests/parity/run.php"]).stdout)
-        for name, case in data["cases"].items():
-            self.assertNotIn("</style", case["css"].lower(), name)
+        css = data["cases"]["css breakout: closing tag"]["css"]
+        self.assertIn(".x{color:red}\\3c /style>\\3c script>alert(1)\\3c /script>", css)
+        css = data["cases"]["css strings keep their meaning"]["css"]
+        self.assertIn('content:"a \\3c  b"} .a > .b{color:red}', css)
 
 
 class Files(unittest.TestCase):

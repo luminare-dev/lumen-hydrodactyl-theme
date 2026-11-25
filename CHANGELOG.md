@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/luminare-dev/lumen-hydrodactyl-theme/compare/v0.1.0...v0.1.1) (2026-11-25)
+
+
+### Fixed
+
+* **tokens:** escape &lt; in custom CSS instead of filtering tags ([5d31c9b](https://github.com/luminare-dev/lumen-hydrodactyl-theme/commit/5d31c9ba88e2f317b1d6ce2fee05da910b9db13f))
+
 ## 0.1.0 (2026-11-22)
 
 

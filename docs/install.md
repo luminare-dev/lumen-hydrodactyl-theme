@@ -52,6 +52,27 @@ Options: `--yes` (no prompt), `--no-migrate`, `--no-build` (build yourself later
 setup needs it (for example `chown -R www-data:www-data .`). Re-cache when you normally do:
 `php artisan config:cache && php artisan route:cache && php artisan view:cache`.
 
+### Small servers: take the frontend build from CI
+
+`pnpm install` and `pnpm build` need well over a gigabyte of memory. On a small server, install
+with `--no-build` and use the build of the `panel-build` workflow instead. It builds the pinned
+Hydrodactyl release plus the overlay for every change on `main` (or on demand) and keeps the
+artifact `panel-build` for 90 days: `panel-build.tar.gz`, its SHA-256 and `BUILD-INFO`. Take the
+run of the commit you install from:
+
+```bash
+COMMIT=$(git rev-parse HEAD)
+RUN=$(gh run list --repo luminare-dev/lumen-hydrodactyl-theme --workflow panel-build.yml \
+  --commit "$COMMIT" --status success --json databaseId --jq '.[0].databaseId')
+gh run download "$RUN" --repo luminare-dev/lumen-hydrodactyl-theme --name panel-build --dir /root/panel-build
+cd /root/panel-build && sha256sum -c panel-build.tar.gz.sha256 && grep "theme_commit=$COMMIT" BUILD-INFO
+rm -rf /var/www/hydrodactyl/public/build
+tar -C /var/www/hydrodactyl/public -xzf panel-build.tar.gz
+```
+
+The build only fits a panel that matches `upstream.lock` (`check-overlay.sh --panel` passes and
+the panel's files are the pinned release).
+
 Make sure `public/storage` links to `storage/app/public` (`php artisan storage:link`): uploaded
 logos are stored there.
 
